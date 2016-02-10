@@ -1,0 +1,18 @@
+{
+  "parser": "babel-eslint",
+  "plugins": [ "mocha", "react" ],
+  "extends": "airbnb",
+  "rules": {
+    "indent": [2, 4],
+    comma-dangle: [2, "never"],
+    "react/jsx-indent-props": [2, 4]
+  },
+  "env": {
+    "es6": true,
+    "browser": true
+  },
+  "ecmaFeatures": {
+    "jsx": true,
+    "experimentalObjectRestSpread": true
+  }
+}
