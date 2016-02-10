@@ -1,4 +1,4 @@
-# common-accessible-components
+# Common Accessible Components
 
 [![Travis][build-badge]][build]
 [![npm package][npm-badge]][npm]

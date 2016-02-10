@@ -4,8 +4,13 @@ import cx from 'classnames';
 
 class Icon extends Component {
     render() {
+        const { className, ...other } = this.props;
         return (
-            <span className={Icon.getClasses(this.props)} aria-hidden="true"></span>
+            <span
+                className={Icon.getClasses(this.props)}
+                aria-hidden="true"
+                {...other}
+            ></span>
         );
     }
 }
