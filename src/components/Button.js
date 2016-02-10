@@ -32,88 +32,9 @@ const buttonEventNames = [
     'onBlur'
 ];
 
-export default class Button extends Component {
-
-    static displayName = 'Button';
-
-    static propTypes = _.assign(
-        {},
-        {
-            'aria-label': isRequiredIf(
-                PropTypes.string, (props) => Button.isIconButton(props)
-            ),
-            kind: PropTypes.oneOf(kinds),
-            children: PropTypes.any,
-            className: PropTypes.string,
-            disabled: PropTypes.bool,
-            spinnerClassName: PropTypes.string,
-            isLoading: PropTypes.bool,
-            name: PropTypes.string.isRequired,
-            size: PropTypes.oneOf(buttonSizes),
-            type: PropTypes.oneOf(buttonTypes)
-        },
-        _.fromPairs(_.map(
-            buttonEventNames, eventName => [eventName, PropTypes.func]
-        ))
-    );
-
-    static defaultProps = _.assign(
-        {},
-        {
-            className: '',
-            disabled: false,
-            isLoading: false,
-            type: _.first(buttonTypes)
-        },
-        _.fromPairs(_.map(buttonEventNames, eventName => [eventName, _.noop]))
-    );
-
+class Button extends Component {
     constructor(properties) {
         super(properties);
-    }
-
-    static getClasses(props) {
-        const prefix = 'dd';
-        const block = `${prefix}-${Button.displayName.toLowerCase()}`;
-        const styleMod = props.kind && `${block}--${props.kind}`;
-        const sizeMod = props.size && `${block}--${props.size}`;
-        const iconMod = props.size && `${block}--icon`;
-        const disabledMod = `${block}--disabled`;
-        const loadingMod = `${block}--loading`;
-        const extraClasses = props.className.split(' ');
-
-        return cx(
-            _.assign(
-                {},
-                { [block]: true },
-                { [styleMod]: !!styleMod },
-                { [sizeMod]: !!sizeMod },
-                { [iconMod]: Button.isIconButton(props) },
-                { [disabledMod]: props.disabled },
-                { [loadingMod]: props.isLoading },
-                _.fromPairs(_.map(
-                    extraClasses, className => [className, true]
-                ))
-            )
-        );
-    }
-
-    static getSpinner(props) {
-        const { Spinner } = require('../index');
-        return <Spinner className={props.spinnerClassName} />;
-    }
-
-    static getEventsBinding(context) {
-        return _.fromPairs(
-            _.map(buttonEventNames, (eventName) => [
-                eventName, context.props[eventName].bind(context)
-            ])
-        );
-    }
-
-    static isIconButton(props) {
-        const { Icon } = require('../index');
-        return hasChild(props.children, Icon) && React.Children.count(props.children) === 1;
     }
 
     render() {
@@ -133,3 +54,81 @@ export default class Button extends Component {
         );
     }
 }
+
+Button.displayName = 'Button';
+
+Button.propTypes = _.assign(
+    {},
+    {
+        'aria-label': isRequiredIf(
+            PropTypes.string, (props) => Button.isIconButton(props)
+        ),
+        kind: PropTypes.oneOf(kinds),
+        children: PropTypes.any,
+        className: PropTypes.string,
+        disabled: PropTypes.bool,
+        spinnerClassName: PropTypes.string,
+        isLoading: PropTypes.bool,
+        name: PropTypes.string.isRequired,
+        size: PropTypes.oneOf(buttonSizes),
+        type: PropTypes.oneOf(buttonTypes)
+    },
+    _.fromPairs(_.map(
+        buttonEventNames, eventName => [eventName, PropTypes.func]
+    ))
+);
+
+Button.defaultProps = _.assign(
+    {},
+    {
+        className: '',
+        disabled: false,
+        isLoading: false,
+        type: _.first(buttonTypes)
+    },
+    _.fromPairs(_.map(buttonEventNames, eventName => [eventName, _.noop]))
+);
+
+Button.getClasses = (props) => {
+    const prefix = 'dd';
+    const block = `${prefix}-${Button.displayName.toLowerCase()}`;
+    const styleMod = props.kind && `${block}--${props.kind}`;
+    const sizeMod = props.size && `${block}--${props.size}`;
+    const iconMod = props.size && `${block}--icon`;
+    const disabledMod = `${block}--disabled`;
+    const loadingMod = `${block}--loading`;
+    const extraClasses = props.className.split(' ');
+
+    return cx(
+        _.assign(
+            {},
+            { [block]: true },
+            { [styleMod]: !!styleMod },
+            { [sizeMod]: !!sizeMod },
+            { [iconMod]: Button.isIconButton(props) },
+            { [disabledMod]: props.disabled },
+            { [loadingMod]: props.isLoading },
+            _.fromPairs(_.map(
+                extraClasses, className => [className, true]
+            ))
+        )
+    );
+};
+
+Button.getSpinner = (properties) => {
+    const { Spinner } = require('../index');
+    return <Spinner className={properties.spinnerClassName} />;
+};
+
+Button.getEventsBinding = (context) => _.fromPairs(
+    _.map(buttonEventNames, (eventName) => [
+        eventName, context.props[eventName].bind(context)
+    ])
+);
+
+Button.isIconButton = (props) => {
+    const { Icon } = require('../index');
+    return hasChild(props.children, Icon) && React.Children.count(props.children) === 1;
+};
+
+export default Button;
