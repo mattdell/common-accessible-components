@@ -37,8 +37,8 @@ You will need the following things properly installed on your computer.
 [build-badge]: https://img.shields.io/travis/DeloitteDigitalUK/common-accessible-components/master.svg?style=flat-square
 [build]: https://travis-ci.org/DeloitteDigitalUK/common-accessible-components.svg?branch=master
 
-[npm-badge]: https://img.shields.io/npm/v/npm-package.svg?style=flat-square
-[npm]: https://www.npmjs.org/package/npm-package
+[npm-badge]: https://img.shields.io/npm/v/common-accessible-components.svg?style=flat-square
+[npm]: https://www.npmjs.org/package/common-accessible-components
 
 [coveralls-badge]: https://img.shields.io/coveralls/DeloitteDigitalUK/common-accessible-components/master.svg?style=flat-square
 [coveralls]: https://coveralls.io/github/DeloitteDigitalUK/common-accessible-components
