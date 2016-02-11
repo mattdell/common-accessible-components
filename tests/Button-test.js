@@ -1,5 +1,6 @@
 import React, { createElement as $ } from 'react';
 import { Button as Element, Icon } from 'src/';
+import _ from 'lodash';
 import { expect } from 'chai';
 import sd from './utils/skin-deep';
 
@@ -67,6 +68,35 @@ describe('Button', () => {
             expect(vdom.props).to.have.property('data-digital', 'digital');
             expect(vdom.props).to.have.property('dataTest', 'test');
             expect(vdom.props).to.have.property('aria-labelledby', 'digital');
+        });
+
+        it('binding events to the instance', () => {
+            const state = { isClicked: true };
+            const buttonEventNames = [
+                'onClick',
+                'onTouchStart',
+                'onTouchEnd',
+                'onTouchCancel',
+                'onMouseDown',
+                'onMouseEnter',
+                'onMouseLeave',
+                'onFocus',
+                'onBlur'
+            ];
+
+            _.map(buttonEventNames, (eventName) => {
+                props[eventName] = function (event) {
+                    this.setState(state);
+                    event.preventDefault();
+                };
+
+                const tree = sd.shallowRender($(Element, props));
+                tree.props[eventName]({
+                    preventDefault() {}
+                });
+
+                expect(tree.getMountedInstance().state).to.eql(state);
+            });
         });
     });
 });

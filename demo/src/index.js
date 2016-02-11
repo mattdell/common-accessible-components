@@ -1,7 +1,8 @@
-import React, {Component} from 'react';
-import {render} from 'react-dom';
+import React, { Component } from 'react';
+import { render } from 'react-dom';
 
 import ButtonPlayground from './components/ButtonPlayground';
+import TextInputPlayground from './components/TextInputPlayground';
 
 class ComponentsPlayground extends Component {
     render() {
@@ -9,9 +10,10 @@ class ComponentsPlayground extends Component {
             <div>
                 <h1>Components Playground</h1>
                 <ButtonPlayground/>
+                <TextInputPlayground/>
             </div>
         );
     }
 }
 
-render(<ButtonPlayground/>, document.querySelector('#demo'))
+render(<ComponentsPlayground/>, document.querySelector('#demo'));
