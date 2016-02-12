@@ -33,24 +33,21 @@ class TextInput extends Component {
 
     constructor(properties) {
         super(properties);
-
-        this.state = {
-            value: !_.isUndefined(this.props.defaultValue) ? this.props.defaultValue : ''
-        };
     }
 
     render() {
-        const { group, defaultValue, children, className, id, valueFormatter, customValidator,
+        const { defaultValue, children, className, id, value,
         ...other } = this.props;
         return (
             <input
                 className={TextInput.getClasses(this.props)}
                 ref={_.camelCase(TextInput.displayName)}
                 id={this.props.name}
-                value={this.state.value || ''}
+                value={this.props.valueFormatter(this.props.value)}
                 aria-required={this.props.required}
                 aria-readonly={this.props.readOnly}
                 {...other}
+                {...TextInput.getEventsBinding(this)}
             />
         );
     }
@@ -68,17 +65,14 @@ TextInput.propTypes = _.assign(
             PropTypes.string, (props) => !!props.readOnly
         ),
 
-        group: React.PropTypes.string.isRequired,
         name: React.PropTypes.string.isRequired,
-        id: React.PropTypes.string.required,
-        defaultValue: React.PropTypes.oneOfType([
+        id: React.PropTypes.string,
+        value: React.PropTypes.oneOfType([
             React.PropTypes.string,
             React.PropTypes.number
         ]),
         type: React.PropTypes.oneOf(textInputTypes),
         className: React.PropTypes.string,
-        valueFormatter: React.PropTypes.func,
-        customValidator: React.PropTypes.func,
         required: React.PropTypes.bool
     },
     _.fromPairs(_.map(
@@ -96,12 +90,19 @@ TextInput.defaultProps = _.assign(
     _.fromPairs(_.map(textInputEventNames, eventName => [eventName, _.noop]))
 );
 
+TextInput.getEventsBinding = (context) => _.fromPairs(
+    _.map(textInputEventNames, (eventName) => [
+        eventName, context.props[eventName].bind(context)
+    ])
+);
+
 TextInput.getClasses = (props) => {
     const prefix = 'dd';
     const block = `${prefix}-${TextInput.displayName.toLowerCase()}`;
     const disabledMod = `${block}--disabled`;
     const requiredMod = `${block}--required`;
     const readonlyMod = `${block}--readonly`;
+    const typeMod = `${block}--${props.type}`;
     const extraClasses = props.className.split(' ');
 
     return cx(
@@ -111,6 +112,7 @@ TextInput.getClasses = (props) => {
             { [disabledMod]: props.disabled },
             { [requiredMod]: !!props.required },
             { [readonlyMod]: !!props.readOnly },
+            { [typeMod]: props.type !== 'text' ? !!props.type : false },
             _.fromPairs(_.map(
                 extraClasses, className => [className, true]
             ))
