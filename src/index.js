@@ -1,11 +1,13 @@
 import Button from './components/atoms/Button';
 import Icon from './components/atoms/Icon';
-import Spinner from './components/atoms/Spinner';
 import Input from './components/atoms/Input';
+import Label from './components/atoms/Label';
+import Spinner from './components/atoms/Spinner';
 
 module.exports = {
     Button,
     Icon,
-    Spinner,
-    Input
+    Input,
+    Label,
+    Spinner
 };

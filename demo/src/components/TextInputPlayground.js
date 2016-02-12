@@ -4,8 +4,6 @@ import _ from 'lodash';
 
 const playgroundName = Input.displayName;
 
-let changedValue;
-
 function handleChange(event) {
     console.log(_.camelCase(event.target.value));
 }
@@ -19,10 +17,9 @@ export default class InputPlayground extends Component {
                     name="username"
                     className="username"
                     data-one="one"
-                    defaultValue="test"
+                    //defaultValue="test123"
                     type="email"
                     onChange={handleChange}
-                    value="test"
                 />
             </div>
         );

@@ -21,8 +21,8 @@ Label.displayName = 'Label';
 Label.propTypes = {
     className: PropTypes.string,
     required: PropTypes.bool,
-    children: PropTypes.string,
-    htmlFor: PropTypes.string.required
+    children: PropTypes.string.isRequired,
+    htmlFor: PropTypes.string.isRequired
 };
 
 Label.getClasses = (props) => {

@@ -2,7 +2,7 @@ import React, { createElement as $ } from 'react';
 import { Button as Element, Icon } from 'src/';
 import _ from 'lodash';
 import { expect } from 'chai';
-import sd from './utils/skin-deep';
+import sd from '../../test-helpers/skin-deep';
 
 let props = {};
 

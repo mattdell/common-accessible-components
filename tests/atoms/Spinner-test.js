@@ -1,7 +1,7 @@
 import { createElement as $ } from 'react';
 import { Spinner as Element } from 'src/';
 import { expect } from 'chai';
-import sd from './utils/skin-deep';
+import sd from '../../test-helpers/skin-deep';
 
 let props = {};
 

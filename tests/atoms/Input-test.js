@@ -2,7 +2,7 @@ import { createElement as $ } from 'react';
 import { Input as Element } from 'src/';
 import _ from 'lodash';
 import { expect } from 'chai';
-import sd from './utils/skin-deep';
+import sd from '../../test-helpers/skin-deep';
 
 let props = {};
 
@@ -14,7 +14,7 @@ describe('Input', () => {
     });
 
     describe('should render in the DOM', () => {
-        it('renders as <Input>', () => {
+        it('renders as <input>', () => {
             const tree = sd.shallowRender($(Element, props));
             const vdom = tree.getRenderOutput();
             const instance = tree.getMountedInstance();
@@ -23,6 +23,14 @@ describe('Input', () => {
             expect(vdom.props.type).to.equal('text');
             expect(vdom).to.not.equal('undefined');
             expect(instance).to.not.equal('undefined');
+        });
+
+        it('should be able to set default value', () => {
+            props.defaultValue = 'test@test.com';
+            const tree = sd.shallowRender($(Element, props));
+            const vdom = tree.getRenderOutput();
+
+            expect(tree.toString()).to.match(/test@test.com/);
         });
 
         it('should have various types', () => {

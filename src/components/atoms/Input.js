@@ -66,7 +66,7 @@ Input.propTypes = _.assign(
         'aria-readonly': isRequiredIf(
             PropTypes.string, (props) => !!props.readOnly
         ),
-
+        defaultValue: React.PropTypes.string,
         name: React.PropTypes.string.isRequired,
         id: React.PropTypes.string,
         value: React.PropTypes.oneOfType([
