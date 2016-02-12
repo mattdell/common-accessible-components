@@ -1,27 +1,28 @@
 import React, { Component } from 'react';
-import { TextInput } from '../../../src';
+import { Input } from '../../../src';
 import _ from 'lodash';
 
-const playgroundName = TextInput.displayName;
+const playgroundName = Input.displayName;
 
-const camelCase = _.camelCase;
+let changedValue;
 
 function handleChange(event) {
-    console.log(camelCase(event.target.value));
+    console.log(_.camelCase(event.target.value));
 }
 
-export default class TextInputPlayground extends Component {
+export default class InputPlayground extends Component {
     render() {
         return (
             <div className={`playground playground--${playgroundName}`}>
-                <h2>{TextInput.displayName} component Playground</h2>
-                <TextInput
+                <h2>{Input.displayName} component Playground</h2>
+                <Input
                     name="username"
                     className="username"
                     data-one="one"
                     defaultValue="test"
                     type="email"
                     onChange={handleChange}
+                    value="test"
                 />
             </div>
         );

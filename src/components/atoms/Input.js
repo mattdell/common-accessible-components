@@ -3,9 +3,12 @@ import _ from 'lodash';
 import cx from 'classnames';
 import isRequiredIf from 'react-proptype-conditional-require';
 
-const textInputEventNames = [
+const inputEventNames = [
     'onClick',
     'onChange',
+    'onKeyPress',
+    'onKeyDown',
+    'onKeyUp',
     'onTouchStart',
     'onTouchEnd',
     'onTouchCancel',
@@ -16,7 +19,7 @@ const textInputEventNames = [
     'onBlur'
 ];
 
-const textInputTypes = [
+const inputTypes = [
     'text',
     'time',
     'hidden',
@@ -29,33 +32,32 @@ const textInputTypes = [
     'password'
 ];
 
-class TextInput extends Component {
+class Input extends Component {
 
     constructor(properties) {
         super(properties);
     }
 
     render() {
-        const { defaultValue, children, className, id, value,
+        const { children, className, id,
         ...other } = this.props;
         return (
             <input
-                className={TextInput.getClasses(this.props)}
-                ref={_.camelCase(TextInput.displayName)}
+                className={Input.getClasses(this.props)}
+                ref={_.camelCase(Input.displayName)}
                 id={this.props.name}
-                value={this.props.valueFormatter(this.props.value)}
                 aria-required={this.props.required}
                 aria-readonly={this.props.readOnly}
                 {...other}
-                {...TextInput.getEventsBinding(this)}
+                {...Input.getEventsBinding(this)}
             />
         );
     }
 }
 
-TextInput.displayName = 'TextInput';
+Input.displayName = 'Input';
 
-TextInput.propTypes = _.assign(
+Input.propTypes = _.assign(
     {},
     {
         'aria-required': isRequiredIf(
@@ -71,34 +73,33 @@ TextInput.propTypes = _.assign(
             React.PropTypes.string,
             React.PropTypes.number
         ]),
-        type: React.PropTypes.oneOf(textInputTypes),
+        type: React.PropTypes.oneOf(inputTypes),
         className: React.PropTypes.string,
         required: React.PropTypes.bool
     },
     _.fromPairs(_.map(
-        textInputEventNames, eventName => [eventName, PropTypes.func]
+        inputEventNames, eventName => [eventName, PropTypes.func]
     ))
 );
 
-TextInput.defaultProps = _.assign(
+Input.defaultProps = _.assign(
     {},
     {
         className: '',
-        type: _.first(textInputTypes),
-        valueFormatter: value => value
+        type: _.first(inputTypes)
     },
-    _.fromPairs(_.map(textInputEventNames, eventName => [eventName, _.noop]))
+    _.fromPairs(_.map(inputEventNames, eventName => [eventName, _.noop]))
 );
 
-TextInput.getEventsBinding = (context) => _.fromPairs(
-    _.map(textInputEventNames, (eventName) => [
+Input.getEventsBinding = (context) => _.fromPairs(
+    _.map(inputEventNames, (eventName) => [
         eventName, context.props[eventName].bind(context)
     ])
 );
 
-TextInput.getClasses = (props) => {
+Input.getClasses = (props) => {
     const prefix = 'dd';
-    const block = `${prefix}-${TextInput.displayName.toLowerCase()}`;
+    const block = `${prefix}-${Input.displayName.toLowerCase()}`;
     const disabledMod = `${block}--disabled`;
     const requiredMod = `${block}--required`;
     const readonlyMod = `${block}--readonly`;
@@ -120,4 +121,4 @@ TextInput.getClasses = (props) => {
     );
 };
 
-export default TextInput;
+export default Input;

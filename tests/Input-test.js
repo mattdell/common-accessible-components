@@ -1,12 +1,12 @@
-import React, { createElement as $ } from 'react';
-import { TextInput as Element } from 'src/';
+import { createElement as $ } from 'react';
+import { Input as Element } from 'src/';
 import _ from 'lodash';
 import { expect } from 'chai';
 import sd from './utils/skin-deep';
 
 let props = {};
 
-describe('TextInput', () => {
+describe('Input', () => {
     beforeEach(() => {
         props = {
             name: 'username'
@@ -14,12 +14,12 @@ describe('TextInput', () => {
     });
 
     describe('should render in the DOM', () => {
-        it('renders as <TextInput>', () => {
+        it('renders as <Input>', () => {
             const tree = sd.shallowRender($(Element, props));
             const vdom = tree.getRenderOutput();
             const instance = tree.getMountedInstance();
 
-            expect(vdom.props.className).to.match(/dd-textinput/);
+            expect(vdom.props.className).to.match(/dd-input/);
             expect(vdom.props.type).to.equal('text');
             expect(vdom).to.not.equal('undefined');
             expect(instance).to.not.equal('undefined');
@@ -31,7 +31,7 @@ describe('TextInput', () => {
             const vdom = tree.getRenderOutput();
 
             expect(vdom.props.type).to.equal('email');
-            expect(vdom.props.className).to.match(/dd-textinput--email/);
+            expect(vdom.props.className).to.match(/dd-input--email/);
         });
 
         it('should support extra classes', () => {
@@ -56,9 +56,12 @@ describe('TextInput', () => {
 
         it('binding events to the instance', () => {
             const state = { isClicked: true };
-            const TextInputEventNames = [
+            const inputEventNames = [
                 'onClick',
                 'onChange',
+                'onKeyPress',
+                'onKeyDown',
+                'onKeyUp',
                 'onTouchStart',
                 'onTouchEnd',
                 'onTouchCancel',
@@ -69,7 +72,7 @@ describe('TextInput', () => {
                 'onBlur'
             ];
 
-            _.map(TextInputEventNames, (eventName) => {
+            _.map(inputEventNames, (eventName) => {
                 props[eventName] = function (event) {
                     this.setState(state);
                     event.preventDefault();
