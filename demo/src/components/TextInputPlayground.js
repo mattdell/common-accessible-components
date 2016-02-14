@@ -17,7 +17,7 @@ export default class InputPlayground extends Component {
                     name="username"
                     className="username"
                     data-one="one"
-                    //defaultValue="test123"
+                    defaultValue="test"
                     type="email"
                     onChange={handleChange}
                 />
