@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import _ from 'lodash';
-import { hasChild } from '../utils';
+import { hasChild } from '../../utils';
 import isRequiredIf from 'react-proptype-conditional-require';
 import cx from 'classnames';
 
@@ -45,9 +45,8 @@ class Button extends Component {
             <button
                 className = {Button.getClasses(this.props)}
                 disabled = {this.props.disabled || this.props.isLoading}
-
-                {...Button.getEventsBinding(this)}
                 {...other}
+                {...Button.getEventsBinding(this)}
             >
                 {this.props.isLoading ? Button.getSpinner(this.props) : this.props.children}
             </button>
@@ -116,7 +115,7 @@ Button.getClasses = (props) => {
 };
 
 Button.getSpinner = (properties) => {
-    const { Spinner } = require('../index');
+    const { Spinner } = require('../../index');
     return <Spinner className={properties.spinnerClassName} />;
 };
 
@@ -127,7 +126,7 @@ Button.getEventsBinding = (context) => _.fromPairs(
 );
 
 Button.isIconButton = (props) => {
-    const { Icon } = require('../index');
+    const { Icon } = require('../../index');
     return hasChild(props.children, Icon) && React.Children.count(props.children) === 1;
 };
 
